@@ -1,2 +1,2 @@
-include LICENSE
+include CHANGES LICENSE
 include stamps/wsdls/*.wsdl

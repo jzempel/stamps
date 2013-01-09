@@ -21,7 +21,7 @@ from suds.sudsobject import asdict
 
 PATTERN_HEX = r"[0-9a-fA-F]"
 PATTERN_ID = r"{hex}{{8}}-{hex}{{4}}-{hex}{{4}}-{hex}{{4}}-{hex}{{12}}".format(
-        hex=PATTERN_HEX)
+    hex=PATTERN_HEX)
 RE_TRANSACTION_ID = compile(PATTERN_ID)
 
 
@@ -86,7 +86,7 @@ class BaseService(object):
         credentials.Username = configuration.username
         credentials.Password = configuration.password
         self.plugin = AuthenticatorPlugin(credentials, self.client)
-        self.client.set_options(plugins=[self.plugin], port="SwsimV24Soap12")
+        self.client.set_options(plugins=[self.plugin], port=configuration.port)
         self.logger = getLogger("stamps")
 
     def call(self, method, **kwargs):

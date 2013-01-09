@@ -21,9 +21,11 @@ class StampsConfiguration(object):
     :param password: Stamps.com password.
     :param wsdl: Default `None`. WSDL URI. Use ``'testing'`` to use the test
         server WSDL.
+    :param port: Default `None`. The name of the WSDL port to use.
     """
 
-    def __init__(self, integration_id, username, password, wsdl=None):
+    def __init__(self, integration_id, username, password, wsdl=None,
+            port=None):
         self.integration_id = integration_id,
         self.username = username
         self.password = password
@@ -33,11 +35,13 @@ class StampsConfiguration(object):
             directory_path = os.path.dirname(file_path)
 
             if wsdl == "testing":
-                file_name = "stamps_v24.test.wsdl"
+                file_name = "stamps_v25.test.wsdl"
             else:
-                file_name = "stamps_v24.wsdl"
+                file_name = "stamps_v25.wsdl"
 
             wsdl = os.path.join(directory_path, "wsdls", file_name)
             self.wsdl = "file://{0}".format(wsdl)
         else:
             self.wsdl = wsdl
+
+        self.port = port or "SwsimV25Soap12"
