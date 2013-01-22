@@ -15,16 +15,15 @@ from datetime import date
 from time import sleep
 from unittest import TestCase
 import logging
+import os
 
 
 logging.basicConfig()
 logging.getLogger("suds.client").setLevel(logging.DEBUG)
-
-CONFIGURATION = StampsConfiguration(
-        integration_id="BBAB3DAF-7DB3-4503-ADFF-D0F3080A0305",
-        username="pickwick",
-        password="postage1",
-        wsdl="testing")
+file_path = os.path.abspath(__file__)
+directory_path = os.path.dirname(file_path)
+file_name = os.path.join(directory_path, os.pardir, "stamps.cfg")
+CONFIGURATION = StampsConfiguration(section="test", file_name=file_name)
 
 
 def get_rate(service):
@@ -100,8 +99,8 @@ class StampsTestCase(TestCase):
         registration.Codeword2Type = type.Last4DriversLicense
         registration.Codeword2 = 1234
         registration.PhysicalAddress = get_from_address(self.service)
-        registration.MachineInfo.IPAddress = "24.5.68.146"
-        registration.Email = "matt@pickwickweller.com"
+        registration.MachineInfo.IPAddress = "127.0.0.1"
+        registration.Email = "sws-support@stamps.com"
         type = self.service.create("AccountType")
         registration.AccountType = type.OfficeBasedBusiness
         result = self.service.register_account(registration)

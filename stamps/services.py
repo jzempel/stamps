@@ -9,7 +9,6 @@
     :license: BSD, see LICENSE for more details.
 """
 
-from logging import getLogger
 from re import compile
 from suds import WebFault
 from suds.bindings.document import Document
@@ -87,7 +86,7 @@ class BaseService(object):
         credentials.Password = configuration.password
         self.plugin = AuthenticatorPlugin(credentials, self.client)
         self.client.set_options(plugins=[self.plugin], port=configuration.port)
-        self.logger = getLogger("stamps")
+        self.logger = configuration.logger
 
     def call(self, method, **kwargs):
         """Call the given web service method.
