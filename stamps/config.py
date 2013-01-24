@@ -33,14 +33,15 @@ class StampsConfiguration(object):
         that represents your application.
     :param username: Default `None`. Stamps.com account username.
     :param password: Default `None`. Stamps.com password.
-    :param wsdl: Default `None`. WSDL URI.
+    :param wsdl: Default `None`. WSDL URI. Use ``'testing'`` to use the test
+        server WSDL.
     :param port: Default `None`. The name of the WSDL port to use.
-    :param section: Default ``'default'``. The configuration section to use.
     :param file_name: Default `None`. Optional configuration file name.
+    :param section: Default ``'default'``. The configuration section to use.
     """
 
     def __init__(self, integration_id=None, username=None, password=None,
-            wsdl=None, port=None, section="default", file_name=None):
+            wsdl=None, port=None, file_name=None, section="default"):
         self.logger = getLogger("stamps")
         parser = SafeConfigParser()
 
@@ -56,20 +57,20 @@ class StampsConfiguration(object):
         self.wsdl = self.__get(parser, section, "wsdl", wsdl)
         self.port = self.__get(parser, section, "port", port)
 
-        if wsdl is None:
+        if self.wsdl is None or wsdl == "testing":
             file_path = os.path.abspath(__file__)
             directory_path = os.path.dirname(file_path)
 
-            if section == "test":
-                wsdl_name = "stamps_v25.test.wsdl"
+            if wsdl == "testing":
+                file_name = "stamps_v26.test.wsdl"
             else:
-                wsdl_name = "stamps_v25.wsdl"
+                file_name = "stamps_v26.wsdl"
 
-            wsdl = os.path.join(directory_path, "wsdls", wsdl_name)
+            wsdl = os.path.join(directory_path, "wsdls", file_name)
             self.wsdl = "file://{0}".format(wsdl)
 
-            if port is None:
-                self.port = "SwsimV25Soap12"
+        if self.port is None:
+            self.port = "SwsimV26Soap12"
 
         assert self.integration_id
         assert self.username

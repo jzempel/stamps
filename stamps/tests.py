@@ -22,8 +22,8 @@ logging.basicConfig()
 logging.getLogger("suds.client").setLevel(logging.DEBUG)
 file_path = os.path.abspath(__file__)
 directory_path = os.path.dirname(file_path)
-file_name = os.path.join(directory_path, os.pardir, "stamps.cfg")
-CONFIGURATION = StampsConfiguration(section="test", file_name=file_name)
+file_name = os.path.join(directory_path, "tests.cfg")
+CONFIGURATION = StampsConfiguration(wsdl="testing", file_name=file_name)
 
 
 def get_rate(service):
@@ -46,7 +46,7 @@ def get_rate(service):
     ret_val.ToState = rate.ToState
     add_on = service.create_add_on()
     add_on.AddOnType = "US-A-DC"
-    ret_val.AddOns.AddOnV2.append(add_on)
+    ret_val.AddOns.AddOnV3.append(add_on)
 
     return ret_val
 

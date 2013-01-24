@@ -9,8 +9,8 @@ Web Services API. As to why anyone would be generating big W-S APIs in the 21st
 century? Don't get me started.
 
 This API gives you a flexible configuration mechanism, calls for the more
-common operations, cached authenticator token, failed authentication retry,
-and examples as test cases.
+common operations, cached authenticator token, conversation out-of-sync
+detection, and examples as test cases.
 
 This API depends on Python "Suds" and exerts minimal opinion on the format or
 results of the Stamps.com operations. In other words, the naming conventions
