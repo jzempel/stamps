@@ -10,7 +10,6 @@
 """
 
 from ConfigParser import NoOptionError, NoSectionError, SafeConfigParser
-from logging import getLogger
 import os
 
 
@@ -42,7 +41,6 @@ class StampsConfiguration(object):
 
     def __init__(self, integration_id=None, username=None, password=None,
             wsdl=None, port=None, file_name=None, section="default"):
-        self.logger = getLogger("stamps")
         parser = SafeConfigParser()
 
         if file_name:
@@ -78,7 +76,8 @@ class StampsConfiguration(object):
         assert self.wsdl
         assert self.port
 
-    def __get(self, parser, section, name, default):
+    @staticmethod
+    def __get(parser, section, name, default):
         """Get a configuration value for the named section.
 
         :param parser: The configuration parser.
@@ -92,8 +91,7 @@ class StampsConfiguration(object):
 
         try:
             ret_val = parser.get(section, name, vars=vars)
-        except (NoSectionError, NoOptionError) as error:
-            self.logger.exception(error)
-            ret_val = None
+        except (NoSectionError, NoOptionError):
+            ret_val = default
 
         return ret_val
