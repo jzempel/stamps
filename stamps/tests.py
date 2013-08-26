@@ -11,7 +11,7 @@
 
 from .config import StampsConfiguration
 from .services import StampsService
-from datetime import date
+from datetime import date, datetime
 from time import sleep
 from unittest import TestCase
 import logging
@@ -46,7 +46,7 @@ def get_rate(service):
     ret_val.ToState = rate.ToState
     add_on = service.create_add_on()
     add_on.AddOnType = "US-A-DC"
-    ret_val.AddOns.AddOnV3.append(add_on)
+    ret_val.AddOns.AddOnV4.append(add_on)
 
     return ret_val
 
@@ -109,7 +109,8 @@ class StampsTestCase(TestCase):
     def _test_1(self):
         """Test postage purchase.
         """
-        result = self.service.add_postage(10, transaction_id="test")
+        transaction_id = datetime.now().isoformat()
+        result = self.service.add_postage(10, transaction_id=transaction_id)
         transaction_id = result.TransactionID
         status = self.service.create_purchase_status()
         seconds = 4
@@ -129,8 +130,9 @@ class StampsTestCase(TestCase):
         rate = get_rate(self.service)
         from_address = get_from_address(self.service)
         to_address = get_to_address(self.service)
+        transaction_id = datetime.now().isoformat()
         label = self.service.get_label(from_address, to_address, rate,
-                transaction_id="test")
+                transaction_id=transaction_id)
         self.service.get_tracking(label.StampsTxID)
         self.service.get_tracking(label.TrackingNumber)
         self.service.remove_label(label.StampsTxID)

@@ -60,15 +60,15 @@ class StampsConfiguration(object):
             directory_path = os.path.dirname(file_path)
 
             if wsdl == "testing":
-                file_name = "stamps_v26.test.wsdl"
+                file_name = "stamps_v29.test.wsdl"
             else:
-                file_name = "stamps_v26.wsdl"
+                file_name = "stamps_v29.wsdl"
 
             wsdl = os.path.join(directory_path, "wsdls", file_name)
             self.wsdl = "file://{0}".format(wsdl)
 
         if self.port is None:
-            self.port = "SwsimV26Soap12"
+            self.port = "SwsimV29Soap12"
 
         assert self.integration_id
         assert self.username
