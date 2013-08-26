@@ -63,3 +63,23 @@ register_account
 
 remove_label
     Cancel a shipping label (triggers a postage refund with Stamps.com).
+
+
+The Instantiation
+=================
+
+The best way to get started is to digest the code in tests.py, which uses a
+file to initialize a test StampsConfiguration. Below is a simple example that
+uses the API to retrieve account information. Register with
+developer.stamps.com to get your own integration ID, username, and password.
+
+    from stamps.config import StampsConfiguration
+    from stamps.services import StampsService
+
+    integration_id = "XXXXXXXX-1111-2222-3333-YYYYYYYYYYYY"
+    username = "stampy"
+    password = "secret"
+    configuration = StampsConfiguration(integration_id=integration_id,
+        username=username, password=password)
+    service = StampsService(configuration=configuration)
+    account = service.get_account()
