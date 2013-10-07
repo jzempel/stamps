@@ -13,6 +13,9 @@ from ConfigParser import NoOptionError, NoSectionError, SafeConfigParser
 import os
 
 
+VERSION = 31
+
+
 class StampsConfiguration(object):
     """Stamps service configuration. The service configuration may be provided
     directly via parameter values, or it can be read from a configuration file.
@@ -60,15 +63,15 @@ class StampsConfiguration(object):
             directory_path = os.path.dirname(file_path)
 
             if wsdl == "testing":
-                file_name = "stamps_v29.test.wsdl"
+                file_name = "stamps_v{0}.test.wsdl".format(VERSION)
             else:
-                file_name = "stamps_v29.wsdl"
+                file_name = "stamps_v{0}.wsdl".format(VERSION)
 
             wsdl = os.path.join(directory_path, "wsdls", file_name)
             self.wsdl = "file://{0}".format(wsdl)
 
         if self.port is None:
-            self.port = "SwsimV29Soap12"
+            self.port = "SwsimV{0}Soap12".format(VERSION)
 
         assert self.integration_id
         assert self.username
