@@ -13,7 +13,7 @@ from ConfigParser import NoOptionError, NoSectionError, SafeConfigParser
 import os
 
 
-VERSION = 31
+VERSION = 33
 
 
 class StampsConfiguration(object):
