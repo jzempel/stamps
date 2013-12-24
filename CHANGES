@@ -5,6 +5,7 @@ Version 0.6
 ^^^^^^^^^^^
 
 * Updated to Stamps.com v33 web services.
+* Support cross-platform WSDL file URL.
 
 Version 0.5
 ^^^^^^^^^^^

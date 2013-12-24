@@ -10,6 +10,8 @@
 """
 
 from ConfigParser import NoOptionError, NoSectionError, SafeConfigParser
+from urllib import pathname2url
+from urlparse import urljoin
 import os
 
 
@@ -68,7 +70,7 @@ class StampsConfiguration(object):
                 file_name = "stamps_v{0}.wsdl".format(VERSION)
 
             wsdl = os.path.join(directory_path, "wsdls", file_name)
-            self.wsdl = "file://{0}".format(wsdl)
+            self.wsdl = urljoin("file:", pathname2url(wsdl))
 
         if self.port is None:
             self.port = "SwsimV{0}Soap12".format(VERSION)
