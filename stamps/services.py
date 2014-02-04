@@ -9,6 +9,7 @@
     :license: BSD, see LICENSE for more details.
 """
 
+from decimal import Decimal
 from logging import getLogger
 from re import compile
 from suds import WebFault
@@ -17,6 +18,8 @@ from suds.client import Client
 from suds.plugin import MessagePlugin
 from suds.sax.element import Element
 from suds.sudsobject import asdict
+from suds.xsd.sxbase import XBuiltin
+from suds.xsd.sxbuiltin import Factory
 
 
 PATTERN_HEX = r"[0-9a-fA-F]"
@@ -80,6 +83,7 @@ class BaseService(object):
     """
 
     def __init__(self, configuration):
+        Factory.maptag("decimal", XDecimal)
         self.client = Client(configuration.wsdl)
         credentials = self.create("Credentials")
         credentials.IntegrationID = configuration.integration_id
@@ -245,3 +249,28 @@ class StampsService(BaseService):
             arguments = dict(TrackingNumber=transaction_id)
 
         return self.call("CancelIndicium", **arguments)
+
+
+class XDecimal(XBuiltin):
+    """Represents an XSD decimal type.
+    """
+
+    def translate(self, value, topython=True):
+        """Translate between string and decimal values.
+
+        :param value: The value to translate.
+        :param topython: Default `True`. Determine whether to translate the
+            value for python.
+        """
+        if topython:
+            if isinstance(value, basestring) and len(value):
+                ret_val = Decimal(value)
+            else:
+                ret_val = None
+        else:
+            if isinstance(value, (int, float, Decimal)):
+                ret_val = str(value)
+            else:
+                ret_val = value
+
+        return ret_val

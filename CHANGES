@@ -5,6 +5,7 @@ Version 0.7
 ^^^^^^^^^^^
 
 * Updated to Stamps.com v34 web services.
+* Mapped xs:decimal to custom XDecimal type.
 
 Version 0.6
 ^^^^^^^^^^^
