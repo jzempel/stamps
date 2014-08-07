@@ -10,7 +10,7 @@
 """
 
 from .config import StampsConfiguration
-from .services import StampsService
+from .services import AuthenticatorPlugin, StampsService
 from datetime import date, datetime
 from time import sleep
 from unittest import TestCase
@@ -147,3 +147,17 @@ class StampsTestCase(TestCase):
         self.service.plugin.authenticator = authenticator
         result = self.service.get_account()
         print result
+
+    def test_4(self):
+        """Test custom authenticator plugin.
+        """
+        class InvalidAuthenticatorPlugin(object):
+            pass
+
+        with self.assertRaises(TypeError):
+            StampsService(CONFIGURATION, InvalidAuthenticatorPlugin)
+
+        class ValidAuthenticatorPlugin(AuthenticatorPlugin):
+            pass
+
+        StampsService(CONFIGURATION, ValidAuthenticatorPlugin)

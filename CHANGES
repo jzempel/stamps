@@ -1,6 +1,11 @@
 Changelog
 ---------
 
+Version 0.7.3
+~~~~~~~~~~~~~
+
+* Updated BaseService to accept a custom AuthenticatorPlugin class.
+
 Version 0.7.2
 ~~~~~~~~~~~~~
 
