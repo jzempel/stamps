@@ -80,16 +80,25 @@ class BaseService(object):
     """Base service.
 
     :param configuration: API configuration.
+    :param authenticator_plugin_class: Default :class:`AuthenticatorPlugin`.
     """
 
-    def __init__(self, configuration):
+    def __init__(self, configuration,
+            authenticator_plugin_class=AuthenticatorPlugin):
         Factory.maptag("decimal", XDecimal)
         self.client = Client(configuration.wsdl)
         credentials = self.create("Credentials")
         credentials.IntegrationID = configuration.integration_id
         credentials.Username = configuration.username
         credentials.Password = configuration.password
-        self.plugin = AuthenticatorPlugin(credentials, self.client)
+
+        if issubclass(authenticator_plugin_class, AuthenticatorPlugin):
+            self.plugin = authenticator_plugin_class(credentials, self.client)
+        else:
+            message = "{0} is not a subclass of {1}.".format(
+                authenticator_plugin_class, AuthenticatorPlugin)
+            raise TypeError(message)
+
         self.client.set_options(plugins=[self.plugin], port=configuration.port)
         self.logger = getLogger("stamps")
 
