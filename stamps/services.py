@@ -213,7 +213,7 @@ class StampsService(BaseService):
         """
         return self.call("CreateIndicium", IntegratorTxID=transaction_id,
                 Rate=rate, From=from_address, To=to_address,
-				Customs=customs, SampleOnly=sample)
+		Customs=customs, SampleOnly=sample)
 
     def get_postage_status(self, transaction_id):
         """Get postage purchase status.
