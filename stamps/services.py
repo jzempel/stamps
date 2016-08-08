@@ -158,7 +158,7 @@ class StampsService(BaseService):
         return self.create("ArrayOfCustomsLine")
 
     def create_customs_lines(self):
-        """Create new customs lines
+        """Create new customs lines.
         """
         return self.create("CustomsLine")
 
@@ -208,12 +208,12 @@ class StampsService(BaseService):
         :param rate: A rate instance for the shipment.
         :param transaction_id: ID that may be used to retry/rollback the
             purchase of this label.
-        :param customs: A customs instance for international shipments.    
+        :param customs: A customs instance for international shipments.
         :param sample: Default ``False``. Get a sample label without postage.
         """
         return self.call("CreateIndicium", IntegratorTxID=transaction_id,
-                Rate=rate, From=from_address, To=to_address,
-		Customs=customs, SampleOnly=sample)
+                Rate=rate, From=from_address, To=to_address, Customs=customs,
+                SampleOnly=sample)
 
     def get_postage_status(self, transaction_id):
         """Get postage purchase status.
