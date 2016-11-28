@@ -230,7 +230,12 @@ class StampsService(BaseService):
         """
         rates = self.call("GetRates", Rate=shipping)
 
-        return [rate for rate in rates.Rates.Rate]
+        if rates.Rates:
+            ret_val = [rate for rate in rates.Rates.Rate]
+        else:
+            ret_val = []
+
+        return ret_val
 
     def get_tracking(self, transaction_id):
         """Get tracking events for a shipment.
